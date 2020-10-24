@@ -14,7 +14,6 @@
   </head>
   <body>
     <div id="root"></div>
-    <!-- 결과: <div id="root"><button>Like</button></div> -->
     <script type="text/babel">
       class GuGuDan extends React.Component {
         state = {
@@ -23,6 +22,7 @@
           value: "",
           result: "",
         };
+        //직접 만들어준 함수는 무조건 화살표 함수 this가 달라지기 때문에
         onSubmit = (e) => {
           e.preventDefault();
           if (
@@ -45,7 +45,7 @@
         onChange = (e) => this.setState({ value: e.target.value });
         render() {
           return (
-            <div>
+            <React.Fragment>
               <div>
                 {this.state.first} 곱하기 {this.state.second} 는?
               </div>
@@ -58,7 +58,7 @@
                 <button>입력!</button>
               </form>
               <div>{this.state.result}</div>
-            </div>
+            </React.Fragment>
           );
         }
       }
