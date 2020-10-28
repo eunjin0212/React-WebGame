@@ -1,16 +1,28 @@
 //ES2015(ES6) 모듈 문법
+
 import React, { Component } from "react";
 import Try from "./Try";
 function getNumbers() {}
 class NumberBaseBall extends Component {
-  state = {
-    result: "",
-    value: "",
-    answer: getNumbers(),
-    tries: [],
-  };
-  onSubmitForm = () => {};
-  onChangeInput = () => {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      result: "",
+      value: "",
+      answer: getNumbers(),
+      tries: [],
+    };
+    this.onSubmitForm = this.onSubmitForm.bind(this);
+    this.onChangeInput = this.onChangeInput.bind(this);
+  }
+  onSubmitForm(e) {
+    e.preventDefault();
+  }
+  onChangeInput(e) {
+    this.setState({
+      value: e.target.value,
+    });
+  }
   fruits = [
     { fruit: "사과", taste: "맛있다" },
     { fruit: "감", taste: "달다달어" },
