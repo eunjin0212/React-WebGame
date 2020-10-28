@@ -1,12 +1,9 @@
 import React from "react";
-import ReactDom from "react-dom";
-import NumberBaseBall, { hot } from "./NumberBaseBall";
+import ReactDOM from "react-dom";
+import { hot } from "react-hot-loader/root";
 
-const Hot = hot(NumberBaseBall);
-ReactDom.render(<Hot />, document.querySelector("#root"));
-import React from "react";
-import ReactDom from "react-dom";
-import NumberBaseBall, { hot } from "./NumberBaseBall";
+import NumberBaseball from "./NumberBaseBall";
 
-const Hot = hot(NumberBaseBall);
-ReactDom.render(<Hot />, document.querySelector("#root"));
+const Hot = hot(NumberBaseball);
+
+ReactDOM.render(<Hot />, document.querySelector("#root"));

@@ -1,5 +1,6 @@
 //ES2015(ES6) 모듈 문법
 import React, { Component } from "react";
+import Try from "./Try";
 function getNumbers() {}
 class NumberBaseBall extends Component {
   state = {
@@ -10,6 +11,15 @@ class NumberBaseBall extends Component {
   };
   onSubmitForm = () => {};
   onChangeInput = () => {};
+  fruits = [
+    { fruit: "사과", taste: "맛있다" },
+    { fruit: "감", taste: "달다달어" },
+    { fruit: "바나나", taste: "맛있다" },
+    { fruit: "귤", taste: "정말맛있다" },
+    { fruit: "밤", taste: "맛나다" },
+    { fruit: "배", taste: "달다" },
+    { fruit: "사과", taste: "맛없다" },
+  ];
   render() {
     return (
       <>
@@ -23,8 +33,8 @@ class NumberBaseBall extends Component {
         </form>
         <div>시도: {this.state.tries.length}</div>
         <ul>
-          {["like", "like", "like", "like", "like"].map(() => {
-            return <li>like</li>;
+          {this.fruits.map((v, i) => {
+            return <Try key={v.fruit + v.taste} value={v} index={i} />; //가독성을 위해
           })}
         </ul>
       </>
