@@ -17,6 +17,9 @@ class NumberBaseBall extends Component {
   }
   onSubmitForm(e) {
     e.preventDefault();
+    if (this.state.value === this.state.answer.join("")) {
+    } else {
+    }
   }
   onChangeInput(e) {
     this.setState({
