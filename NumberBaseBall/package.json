@@ -1,7 +1,8 @@
 {
-  "name": "number-baseball-dev",
+  "name": "number-baseball",
   "version": "1.0.0",
-  "main": "app.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
     "dev": "webpack serve --env development"
   },

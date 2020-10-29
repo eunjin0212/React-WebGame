@@ -1,4 +1,5 @@
 const path = require("path");
+const port = process.env.PORT || 3000;
 
 module.exports = {
   name: "number-baseball-dev",
@@ -39,6 +40,11 @@ module.exports = {
   output: {
     path: path.join(__dirname, "dist"),
     filename: "[name].js",
-    publicPath: "./dist",
+    publicPath: "/dist",
+  },
+  devServer: {
+    host: "localhost",
+    port: port,
+    open: true,
   },
 };
