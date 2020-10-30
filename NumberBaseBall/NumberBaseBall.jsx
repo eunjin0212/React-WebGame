@@ -21,8 +21,8 @@ const NumberBaseball = () => {
   const onSubmitForm = (e) => {
     e.preventDefault();
     if (value === answer.join("")) {
-      setTries((t) => [
-        ...t,
+      setTries((prevTries) => [
+        ...prevTries,
         {
           try: value,
           result: "홈런!",
@@ -39,7 +39,8 @@ const NumberBaseball = () => {
       let strike = 0;
       let ball = 0;
       if (tries.length >= 9) {
-        setResult(`10번 넘게 틀려서 실패! 답은 ${answer.join(",")}였습니다!`); // state set은 비동기
+        setResult(`10번 넘게 틀려서 실패! 답은 ${answer.join(",")}였습니다!`);
+        // state set은 비동기
         setValue("");
         setAnswer(getNumbers());
         setTries([]);
@@ -56,8 +57,9 @@ const NumberBaseball = () => {
             ball += 1;
           }
         }
-        setTries((t) => [
-          ...t,
+        setTries((prevTries) => [
+          //옛날 try로 현재 try를 만들기 때문에 함수형으로 만들어줌
+          ...prevTries,
           {
             try: value,
             result: `${strike} 스트라이크, ${ball} 볼입니다.`,
@@ -68,7 +70,9 @@ const NumberBaseball = () => {
       }
     }
   };
-
+  const onChangeInput = (e) => {
+    setValue(e.target.value);
+  };
   return (
     <>
       <h1>{result}</h1>
@@ -77,7 +81,7 @@ const NumberBaseball = () => {
           ref={inputEl}
           maxLength={4}
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={onChangeInput}
         />
         <button>입력!</button>
       </form>
