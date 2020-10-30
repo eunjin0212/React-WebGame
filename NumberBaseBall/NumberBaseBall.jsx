@@ -34,6 +34,7 @@ const NumberBaseball = () => {
       setTries([]);
       inputEl.current.focus();
       alert("게임을 다시 실행합니다.");
+      setResult("");
     } else {
       const answerArray = value.split("").map((v) => parseInt(v));
       let strike = 0;
@@ -88,7 +89,7 @@ const NumberBaseball = () => {
       <div>시도: {tries.length}</div>
       <ul>
         {tries.map((v, i) => (
-          <Try key={`${i + 1}차 시도 : ${v.try}`} tryInfo={v} />
+          <Try key={`${i + 1}차 시도 : ${v.tries}`} tryInfo={v} />
         ))}
       </ul>
     </>

@@ -1,10 +1,11 @@
 const path = require("path");
 const port = process.env.PORT || 3000;
+// 배포모드 : process.env.NODE_ENV = "production";
 
 module.exports = {
   name: "number-baseball-dev",
-  mode: "development",
-  devtool: "eval",
+  mode: "development", //실서비스 : production
+  devtool: "eval", //실서비스 : hidden-source-map
   resolve: {
     extensions: [".js", ".jsx"],
   },
