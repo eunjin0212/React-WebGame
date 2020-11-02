@@ -42,9 +42,4 @@ module.exports = {
     filename: "[name].js",
     publicPath: "/dist",
   },
-  devServer: {
-    host: "localhost",
-    port: port,
-    open: true,
-  },
 };
