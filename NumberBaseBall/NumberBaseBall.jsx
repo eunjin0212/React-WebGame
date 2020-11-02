@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import Try from "./Try";
+import React, { useRef, memo, useState } from "react";
+import Try from "./TryClass";
 
 const getNumbers = () => {
   const candidates = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -11,7 +11,7 @@ const getNumbers = () => {
   return array;
 };
 
-const NumberBaseball = () => {
+const NumberBaseball = memo(() => {
   const [answer, setAnswer] = useState(getNumbers());
   const [value, setValue] = useState("");
   const [result, setResult] = useState("");
@@ -71,9 +71,7 @@ const NumberBaseball = () => {
       }
     }
   };
-  const onChangeInput = (e) => {
-    setValue(e.target.value);
-  };
+
   return (
     <>
       <h1>{result}</h1>
@@ -82,7 +80,9 @@ const NumberBaseball = () => {
           ref={inputEl}
           maxLength={4}
           value={value}
-          onChange={onChangeInput}
+          onChange={(e) => {
+            setValue(e.target.value);
+          }}
         />
         <button>입력!</button>
       </form>
@@ -94,6 +94,6 @@ const NumberBaseball = () => {
       </ul>
     </>
   );
-};
+});
 
 export default NumberBaseball;

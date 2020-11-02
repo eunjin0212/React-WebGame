@@ -30,7 +30,7 @@ class NumberBaseBall extends Component {
       this.setState((prevState) => {
         return {
           result: "홈런!",
-          tries: [...tries, { try: value, result: "홈런!" }],
+          tries: [...prevState.tries, { try: value, result: "홈런!" }],
         };
       });
       alert("게임을 다시 시작합니다!");
@@ -39,6 +39,7 @@ class NumberBaseBall extends Component {
         answer: getNumbers(),
         tries: [],
       });
+      this.inputRef.current.focus();
     } else {
       //답 틀렸으면
       const answerArray = value.split("").map((v) => parseInt(v));
@@ -55,6 +56,7 @@ class NumberBaseBall extends Component {
           answer: getNumbers(),
           tries: [],
         });
+        this.inputRef.focus();
       } else {
         // 10번이 안틀렸다면
         for (let i = 0; i < 4; i += 1) {
@@ -76,6 +78,7 @@ class NumberBaseBall extends Component {
             value: "",
           };
         });
+        this.inputRef.current.focus();
       }
     }
   };
@@ -85,14 +88,19 @@ class NumberBaseBall extends Component {
       value: e.target.value,
     });
   };
-
+  inputRef = createRef();
   render() {
     const { result, value, tries } = this.state;
     return (
       <>
         <h1>{result}</h1>
         <form onSubmit={this.onSubmitForm}>
-          <input maxLength={4} value={value} onChange={this.onChangeInput} />
+          <input
+            ref={this.inputRef}
+            maxLength={4}
+            value={value}
+            onChange={this.onChangeInput}
+          />
         </form>
         <div>시도: {tries.length}</div>
         <ul>
