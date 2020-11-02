@@ -20,6 +20,7 @@ class NumberBaseBall extends Component {
     answer: getNumbers(),
     tries: [],
   };
+  shouldComponentUpdate(nextProps, nextState, nextContext) {}
 
   onSubmitForm = (e) => {
     const { value, tries, answer, result } = this.state;

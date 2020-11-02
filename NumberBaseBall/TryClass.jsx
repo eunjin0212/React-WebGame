@@ -1,6 +1,15 @@
 import React, { PureComponent } from "react";
 
 class Try extends PureComponent {
+  // constructor(props) {
+  //   super(props);
+  //   const filtered = this.props.filter(() => {});
+  // }
+  // // this.state = {
+  //   result: filtered,
+  //   result: this.props.result,
+  //   try: this.props.try,
+  // };
   render() {
     const { tryInfo } = this.props;
     return (
