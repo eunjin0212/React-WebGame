@@ -38,7 +38,7 @@ class ResponseCheck extends Component {
         return {
           state: "waiting",
           message: "Click and Start.",
-          result: [...prevState.result, this.endTime - this.startTime], // <-- correct time value
+          result: [...prevState.result, this.endTime - this.startTime], 
         };
       });
     }
