@@ -1,4 +1,6 @@
 const path = require("path");
+const port = process.env.PORT || 3000;
+
 module.exports = {
   name: "response-check-dev",
   mode: "development",
@@ -7,7 +9,7 @@ module.exports = {
     extensions: [".js", ".jsx"],
   },
   entry: {
-    app: "./client",
+    app: ["./client"],
   },
   module: {
     rules: [
@@ -26,8 +28,8 @@ module.exports = {
             "@babel/preset-react",
           ],
           plugins: [
-            "react-hot-loader/babel",
             "@babel/plugin-proposal-class-properties",
+            "react-hot-loader/babel",
           ],
         },
         exclude: path.join(__dirname, "node_modules"),
@@ -39,5 +41,10 @@ module.exports = {
     path: path.join(__dirname, "dist"),
     filename: "[name].js",
     publicPath: "/dist",
+  },
+  devServer: {
+    host: "localhost",
+    port: port,
+    open: true,
   },
 };
