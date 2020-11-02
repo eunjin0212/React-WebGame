@@ -11,29 +11,35 @@ const scores = {
   바위: 0,
   보: -1,
 };
+const computerChoice = (imgCoord) => {
+  return Object.entries(rspCoords).find(function (v) {
+    return v[1] === imgCoord;
+  })[0];
+};
 class RSP extends Component {
   state = {
     result: "",
-    imgCoords: 0,
+    imgCoord: 0,
     score: 0,
   };
+
   interval;
   componentDidMount() {
     // 컴포넌트가 첫 렌더링 후
-    const { imgCoords } = this.state;
     this.interval = setInterval(() => {
-      console.log("asdf");
-      if (imgCoords === rspCoords.바위) {
+      const { imgCoord } = this.state;
+      if (imgCoord === rspCoords.바위) {
         this.setState({
-          imgCoords: rspCoords.가위,
+          imgCoord: rspCoords.가위,
         });
-      } else if (imgCoords === rspCoords.가위) {
+      } else if (imgCoord === rspCoords.가위) {
+        console.log("hello", this.state.imgCoord, rspCoords.보);
         this.setState({
-          imgCoords: rspCoords.보,
+          imgCoord: rspCoords.보,
         });
-      } else if (imgCoords === rspCoords.보) {
+      } else if (imgCoord === rspCoords.보) {
         this.setState({
-          imgCoords: rspCoords.바위,
+          imgCoord: rspCoords.바위,
         });
       }
     }, 1000);
@@ -46,17 +52,18 @@ class RSP extends Component {
     // 컴포넌트가 제거되기 직전, 비동기 요청 정리를 많이 함
     clearInterval(this.interval);
   }
+  changeHand = () => {};
   onClickBtn = (choice) => {
-    const { imgCoord } = this.state;
-    const myScore = score[choice];
-    const cpuScore = score[computerChoice(imgCoord)];
-    const diff = myScore - cpuScore;
-    if (diff === 0) {
-      this.setState({
-        result: "비겼습니다",
-      });
-    } else if ([-1, 2]) {
-    }
+    // const { imgCoord } = this.state;
+    // const myScore = score[choice];
+    // const cpuScore = score[computerChoice(imgCoord)];
+    // const diff = myScore - cpuScore;
+    // if (diff === 0) {
+    //   this.setState({
+    //     result: "비겼습니다",
+    //   });
+    // } else if ([-1, 2]) {
+    // }
   };
   render() {
     const { result, score, imgCoord } = this.state;
@@ -84,7 +91,7 @@ class RSP extends Component {
           </button>
         </div>
         <div>{result}</div>
-        <div>현재{score}점</div>
+        <div>현재 {score}점</div>
       </>
     );
   }
