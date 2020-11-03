@@ -53,7 +53,7 @@ class Lotto extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     //조건문이 중요함
-    if (this.winBalls.length === 0) {
+    if (this.state.winBalls.length === 0) {
       this.runTimeOuts();
     }
   }
