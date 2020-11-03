@@ -1,5 +1,4 @@
 const path = require("path");
-const port = process.env.PORT || 3000;
 
 module.exports = {
   name: "response-check-dev",
