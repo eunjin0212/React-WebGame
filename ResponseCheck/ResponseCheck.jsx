@@ -46,7 +46,6 @@ class ResponseCheck extends Component {
   };
 
   onReset = () => {
-    console.log("here");
     this.setState({
       result: [],
     });
