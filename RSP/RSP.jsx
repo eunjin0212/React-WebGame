@@ -14,10 +14,26 @@ const scores = {
 };
 
 const computerChoice = (imgCoord) => {
+  // 컴퓨터가 어떤 손을 내는지 판단하는 것
   return Object.entries(rspCoords).find(function (v) {
     return v[1] === imgCoord;
   })[0];
 };
+
+//                      result, imgCoord, score
+//componentDidMount
+//componentDidUpdate
+//componentWillUnmount
+
+//      Class                         Hooks
+// componentDidMount () {   --->   useEffect(()=>{
+//   this.setState({                 setImgCoord();
+//     imgCoord: 3,                  setScore();
+//     score: 1,                   },[imgCoord, score]);
+//     result: 2,
+//   })                            useEffect(()=> {
+// }                                 setResult();
+//                                 },[result]);
 
 const RSP = () => {
   const [result, setResult] = useState("");
