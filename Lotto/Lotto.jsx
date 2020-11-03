@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import exports from "webpack";
+import Ball from "./Ball";
 
 function getWinNumbers() {
   console.log("getWinNumbers");
