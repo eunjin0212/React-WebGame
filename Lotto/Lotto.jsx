@@ -29,7 +29,16 @@ const Lotto = () => {
   const [bonus, setBonus] = useState(null);
   const [redo, setRedo] = useState(false);
   const timeouts = useRef([]);
-
+  //pattern
+  useEffect(() => {}, []);
+  const mounted = useRef(false);
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
+      //ajax
+    }
+  }, [바뀌는값]); // componentDidUpdate만, componentDidMount X
   useEffect(() => {
     // []배열의 요소가 바뀔때 실행
     console.log("useEffect");
