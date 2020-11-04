@@ -1,6 +1,5 @@
 import React, { memo } from "react";
-
-//함수 컴포넌트
+//함수컴포넌트
 const Ball = memo(({ number }) => {
   let background;
   if (number <= 10) {
@@ -14,6 +13,7 @@ const Ball = memo(({ number }) => {
   } else {
     background = "green";
   }
+
   return (
     <div className="ball" style={{ background }}>
       {number}
@@ -21,7 +21,4 @@ const Ball = memo(({ number }) => {
   );
 });
 
-// class Ball extends PureComponent {
-//   render() {}
-// }
 export default Ball;
