@@ -13,7 +13,7 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case "SET_WINNER":
-      //state.winner = action.winner; 직접 바꿀 수 없음
+      // state.winner = action.winner; 직접 바꿀 수 없음
       return {
         ...state,
         winner: action.winner,
@@ -40,4 +40,4 @@ const TicTacToe = () => {
   );
 };
 
-export default TicTacTo;
+export default TicTacToe;
