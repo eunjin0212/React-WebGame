@@ -10,7 +10,16 @@ const initialState = {
     ["", "", ""],
   ],
 };
-const reducer = (state, action) => {};
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SET_WINNER":
+      //state.winner = action.winner; 직접 바꿀 수 없음
+      return {
+        ...state,
+        winner: action.winner,
+      };
+  }
+};
 const TicTacToe = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   //   const [winner, setWinner] = useState("");
@@ -20,10 +29,13 @@ const TicTacToe = () => {
   //     ["", "", ""],
   //     ["", "", ""]
   //   );
+  const onClickTable = useCallBack(() => {
+    dispatch({ type: "SET_WINNER", winner: "O" });
+  }, []);
   return (
     <>
-      <Table />
-      {winner && <div>{winner}님의 승리</div>}
+      <Table onClick={onClickTable} />
+      {state.winner && <div>{state.winner}님의 승리</div>}
     </>
   );
 };
