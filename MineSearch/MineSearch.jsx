@@ -3,6 +3,8 @@ import Table from "./Table";
 import Form from "./Form";
 const initialState = {
   tableData: [],
+  timer: 0,
+  result: "",
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -12,7 +14,14 @@ const reducer = (state, action) => {
 };
 const MineSearch = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  return <Table />;
+  return (
+    <>
+      <Form />
+      <div>{state.timer}</div>
+      <Table />
+      <div>{state.result}</div>
+    </>
+  );
 };
 
 export default MineSearch;
