@@ -15,6 +15,7 @@ const getTdStyle = (code) => {
     case CODE.MINE:
       return {
         background: "#444",
+        color: "#444",
       };
     case CODE.CLICKED_MINE:
     case CODE.OPENED:

@@ -91,6 +91,7 @@ const reducer = (state, action) => {
         data: { row: action.row, cell: action.cell, mine: action.mine },
         openedCount: 0,
         timer: 0,
+        result: "",
       };
     case "OPEN_CELL": {
       const tableData = [...state.tableData];
@@ -183,12 +184,12 @@ const reducer = (state, action) => {
         state.openedCount + openedCount
       ) {
         halted = true;
-        result = `${state.timer}승리하셨습니다`;
+        result = `${state.timer}초 승리하셨습니다`;
       }
       return {
         ...state,
         tableData,
-        openedCount: state.openedCount + count,
+        openedCount: state.openedCount + openedCount,
         halted,
         result,
       };
@@ -201,6 +202,7 @@ const reducer = (state, action) => {
         ...state,
         tableData,
         halted: true,
+        result: `${state.timer}초 실패하셨습니다`,
       };
     }
     case FLAG_CELL: {
@@ -272,7 +274,7 @@ const MineSearch = () => {
   return (
     <TableContext.Provider value={value}>
       <Form />
-      <div>{timer}</div>
+      <div>time : {timer}sec</div>
       <Table />
       <div>{result}</div>
     </TableContext.Provider>
