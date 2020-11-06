@@ -1,4 +1,10 @@
-import React, { useEffect, useReducer, createContext, useMemo } from "react";
+import React, {
+  useEffect,
+  useReducer,
+  createContext,
+  useMemo,
+  useCallback,
+} from "react";
 import Table from "./Table";
 import Form from "./Form";
 
@@ -25,9 +31,13 @@ const initialState = {
   result: "",
   halted: true,
   openedCount: 0,
+  data: {
+    row: 0,
+    cell: 0,
+    mine: 0,
+  },
 };
 const plantMine = (row, cell, mine) => {
-  console.log(row, cell, mine);
   const candidate = Array(row * cell)
     .fill()
     .map((arr, i) => {
@@ -57,6 +67,7 @@ const plantMine = (row, cell, mine) => {
   console.log(data);
   return data;
 };
+
 export const START_GAME = "START_GAME";
 export const OPEN_CELL = "OPEN_CELL";
 export const CLICK_MINE = "CLICK_MINE";
@@ -67,11 +78,19 @@ export const INCREMENT_TIMER = "INCREMENT_TIMER";
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case INCREMENT_TIMER:
+      return {
+        ...state,
+        timer: state.timer + 1,
+      };
     case START_GAME:
       return {
         ...state,
         tableData: plantMine(action.row, action.cell, action.mine),
         halted: false,
+        data: { row: action.row, cell: action.cell, mine: action.mine },
+        openedCount: 0,
+        timer: 0,
       };
     case "OPEN_CELL": {
       const tableData = [...state.tableData];
@@ -79,7 +98,7 @@ const reducer = (state, action) => {
         tableData[i] = [...row];
       });
       const checked = [];
-      let count = 0;
+      let openedCount = 0;
       const checkAround = (row, cell) => {
         if (
           row < 0 ||
@@ -101,11 +120,11 @@ const reducer = (state, action) => {
           return;
         }
         if (checked.includes(row + "/" + cell)) {
-          return;
+          return; // 닫힌 칸만 열기
         } else {
           checked.push(row + "/" + cell);
-        }
-        count += 1;
+        } // 한 번 연칸은 무시하기
+
         let around = [tableData[row][cell - 1], tableData[row][cell + 1]];
         if (tableData[row - 1]) {
           around = around.concat([
@@ -149,23 +168,29 @@ const reducer = (state, action) => {
               });
           }
         }
+        if (tableData[row][cell] === CODE.NORMAL) {
+          // 내 칸이 닫힌 칸이면 카운트 증가
+          openedCount += 1;
+        }
         tableData[row][cell] = count;
       };
+
       checkAround(action.row, action.cell);
+      let halted = false;
+      let result = "";
+      if (
+        state.data.row * state.data.cell - state.data.mine ===
+        state.openedCount + openedCount
+      ) {
+        halted = true;
+        result = `${state.timer}승리하셨습니다`;
+      }
       return {
         ...state,
         tableData,
         openedCount: state.openedCount + count,
-      };
-    }
-    case "CLICK_MINE": {
-      const tableData = [...state.tableData];
-      tableData[action.row] = [...tableData[action.row]];
-      tableData[action.row][action.cell] = CODE.CLICKED_MINE;
-      return {
-        ...state,
-        tableData,
-        halted: true,
+        halted,
+        result,
       };
     }
     case CLICK_MINE: {
@@ -198,6 +223,10 @@ const reducer = (state, action) => {
       } else {
         tableData[action.row][action.cell] = CODE.QUESTION;
       }
+      return {
+        ...state,
+        tableData,
+      };
     }
     case NORMALIZE_CELL: {
       const tableData = [...state.tableData];
@@ -212,6 +241,12 @@ const reducer = (state, action) => {
         tableData,
       };
     }
+    case INCREMENT_TIMER: {
+      return {
+        ...state,
+        timer: state.timer + 1,
+      };
+    }
     default:
       return state;
   }
@@ -223,6 +258,17 @@ const MineSearch = () => {
     tableData,
     halted,
   ]);
+  useEffect(() => {
+    let timer;
+    if (halted === false) {
+      timer = setInterval(() => {
+        dispatch({ type: INCREMENT_TIMER });
+      }, 1000);
+    }
+    return () => {
+      clearInterval(timer);
+    };
+  }, [halted]);
   return (
     <TableContext.Provider value={value}>
       <Form />
