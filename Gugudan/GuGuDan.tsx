@@ -1,5 +1,4 @@
-const React = require("react");
-const { useState, useRef } = React;
+import React, { useState, useRef } from 'react';
 
 const GuGuDan = () => {
   const [first, setFirst] = useState(Math.ceil(Math.random() * 9));

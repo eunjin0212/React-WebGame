@@ -1,5 +1,4 @@
-const React = require("react");
-const { useState } = require("react");
+import React, { useState } from "react";
 
 const WordRelay = () => {
   const [word, setWord] = useState("김은진");
