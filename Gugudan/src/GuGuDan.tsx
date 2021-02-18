@@ -24,18 +24,20 @@ const GuGuDan = () => {
   };
   return (
     <>
-      <div>
+      <div id="question">
         {first} 곱하기 {second}는?
       </div>
-      <form onSubmit={onSubmitForm}>
-        <input
-          ref={inputEl}
-          type="number"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-        <button>입력!</button>
-      </form>
+      <div>
+        <form onSubmit={onSubmitForm}>
+          <input
+            ref={inputEl}
+            type="number"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <button>입력!</button>
+        </form>
+      </div>
       <div id="result">{result}</div>
     </>
   );
