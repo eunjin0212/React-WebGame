@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 //함수컴포넌트
-const Ball = memo(({ number }) => {
+const Ball = memo(({ number }: { number: number }) => {
   let background;
   if (number <= 10) {
     background = "red";
@@ -21,4 +21,4 @@ const Ball = memo(({ number }) => {
   );
 });
 
-export default Ball;
+export default React.memo(Ball);

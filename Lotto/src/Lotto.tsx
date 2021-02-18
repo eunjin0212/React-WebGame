@@ -1,16 +1,11 @@
 import React, {
-  useState,
-  useRef,
-  useEffect,
-  useMemo,
-  useCallback,
+  useState, useRef, useEffect, useMemo, useCallback
 } from "react";
 import Ball from "./Ball";
 
 function getWinNumbers() {
-  const candidate = Array(45)
-    .fill()
-    .map((v, i) => i + 1);
+  console.log('getWinNumbers');
+  const candidate = Array(45).fill(null).map((v, i) => i + 1);
   const shuffle = [];
   while (candidate.length > 0) {
     shuffle.push(
@@ -23,31 +18,24 @@ function getWinNumbers() {
 }
 
 const Lotto = () => {
-  const lottoNumbers = useMemo(() => getWinNumbers(), []); // useMemo는 리턴값을 기억 []배열의 요소가 바뀌기 전까지
+  // useMemo는 리턴값을 기억 []배열의 요소가 바뀌기 전까지
+  const lottoNumbers = useMemo(() => getWinNumbers(), []);
   const [winNumbers, setWinNumbers] = useState(lottoNumbers);
-  const [winBalls, setWinBalls] = useState([]);
-  const [bonus, setBonus] = useState(null);
+  <script src="../src/App.tsx"></script>
+  const [winBalls, setWinBalls] = useState<number[]>([]);
+  const [bonus, setBonus] = useState<number | null>(null);
   const [redo, setRedo] = useState(false);
-  const timeouts = useRef([]);
-  //pattern
-  useEffect(() => {}, []);
-  const mounted = useRef(false);
+  const timeouts = useRef<number[]>([]);
+
+  // []배열의 요소가 바뀔때 실행
   useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-    } else {
-      //ajax
-    }
-  }, [바뀌는값]); // componentDidUpdate만, componentDidMount X
-  useEffect(() => {
-    // []배열의 요소가 바뀔때 실행
-    console.log("useEffect");
+    console.log('useEffect');
     for (let i = 0; i < winNumbers.length - 1; i++) {
-      timeouts.current[i] = setTimeout(() => {
+      timeouts.current[i] = window.setTimeout(() => {
         setWinBalls((prevBalls) => [...prevBalls, winNumbers[i]]);
       }, (i + 1) * 1000);
     }
-    timeouts.current[6] = setTimeout(() => {
+    timeouts.current[6] = window.setTimeout(() => {
       setBonus(winNumbers[6]);
       setRedo(true);
     }, 7000);
@@ -63,9 +51,9 @@ const Lotto = () => {
     console.log("로또 숫자를 생성합니다.");
   }, [winNumbers]);
 
+  // useCallback은 함수 자체를 기억해뒀다가 재실행될 때 다시 실행되는 것을 막아줌 []배열의 요소가 바뀌기 전까지 기억
   const onClickRedo = useCallback(() => {
-    // useCallback은 함수 자체를 기억해뒀다가 재실행될 때 다시 실행되는 것을 막아줌 []배열의 요소가 바뀌기 전까지 기억
-    console.log("onClickRedo");
+    console.log('onClickRedo');
     console.log(winNumbers);
     setWinNumbers(getWinNumbers());
     setWinBalls([]);
@@ -74,19 +62,27 @@ const Lotto = () => {
     timeouts.current = [];
   }, [winNumbers]);
 
+
   return (
-    <>
+    <div id="container">
       <div>당첨 숫자!!</div>
       <div id="결과창">
-        {winBalls.map((v) => (
-          <Ball key={v} number={v} />
-        ))}
+        {winBalls.map((v) => <Ball key={v} number={v} />)}
       </div>
       <div>보너스!</div>
-      {bonus && <Ball number={bonus} onClick={onClickRedo} />}
+      {bonus && <Ball number={bonus} />}
       {redo && <button onClick={onClickRedo}>한 번 더!</button>}
-    </>
+    </div>
   );
 };
 
 export default Lotto;
+  //pattern
+  // const mounted = useRef(false);
+  // useEffect(() => {
+  //   if (!mounted.current) {
+  //     mounted.current = true;
+  //   } else {
+  //     //ajax
+  //   }
+  // }, []); // componentDidUpdate만, componentDidMount X

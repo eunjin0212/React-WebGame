@@ -4,7 +4,7 @@ import Ball from "./Ball";
 function getWinNumbers() {
   console.log("getWinNumbers");
   const candidate = Array(45)
-    .fill()
+    .fill(45)
     .map((v, i) => i + 1);
   const shuffle = [];
   while (candidate.length > 0) {
@@ -19,19 +19,26 @@ function getWinNumbers() {
   //slice 복사 후 배열 반환
   return [...winNumbers, bonusNumber];
 }
-class Lotto extends Component {
-  state = {
+interface ILotto {
+  winNumbers: number[];
+  winBalls: number[];
+  bonus: number | null;
+  redo: boolean;
+}
+class Lotto extends Component<{}, ILotto> {
+  state: ILotto = {
     winNumbers: getWinNumbers(), // 당첨 숫자들
     winBalls: [],
     bonus: null, // 보너스 공
     redo: false,
   };
-  timeouts = [];
+  timeouts: number[] = [];
 
   runTimeOuts = () => {
+    console.log('runTimeouts');
     const { winNumbers } = this.state;
     for (let i = 0; i < winNumbers.length - 1; i++) {
-      this.timeouts[i] = setTimeout(() => {
+      this.timeouts[i] = window.setTimeout(() => {
         this.setState((prevState) => {
           return {
             winBalls: [...prevState.winBalls, winNumbers[i]],
@@ -39,7 +46,7 @@ class Lotto extends Component {
         });
       }, (i + 1) * 1000);
     }
-    this.timeouts[6] = setTimeout(() => {
+    this.timeouts[6] = window.setTimeout(() => {
       this.setState({
         bonus: winNumbers[6],
         redo: true,
@@ -48,13 +55,19 @@ class Lotto extends Component {
   };
 
   componentDidMount() {
+    console.log('didMount');
     this.runTimeOuts();
+    console.log('로또 숫자를 생성합니다.');
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: {}, prevState: ILotto) {
+    console.log('didUpdate');
     //조건문이 중요함
     if (this.state.winBalls.length === 0) {
       this.runTimeOuts();
+    }
+    if (prevState.winNumbers !== this.state.winNumbers) {
+      console.log('로또 숫자를 생성합니다.');
     }
   }
 
@@ -64,6 +77,7 @@ class Lotto extends Component {
     });
   }
   onClickRedo = () => {
+    console.log('onClickRedo');
     this.setState({
       winNumbers: getWinNumbers(), // 당첨 숫자들
       winBalls: [],
@@ -75,7 +89,7 @@ class Lotto extends Component {
   render() {
     const { winBalls, bonus, redo } = this.state;
     return (
-      <>
+      <div id="container">
         <div>당첨 숫자</div>
         <div id="결과창">
           {winBalls.map((v) => (
@@ -85,7 +99,7 @@ class Lotto extends Component {
         <div>보너스</div>
         {bonus && <Ball number={bonus} />}
         {redo && <button onClick={this.onClickRedo}>한 번 더!</button>}
-      </>
+      </div>
     );
   }
 }
