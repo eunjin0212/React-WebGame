@@ -5,9 +5,10 @@ const GuGuDan = () => {
   const [second, setSecond] = useState(Math.ceil(Math.random() * 9));
   const [value, setValue] = useState("");
   const [result, setResult] = useState("");
-  const inputEl = useRef(null);
+  const inputEl = useRef<any>();
 
-  const onSubmitForm = (e) => {
+  const onSubmitForm = (e: any) => {
+    console.log(typeof e);
     e.preventDefault();
     if (parseInt(value) === first * second) {
       setResult("정답");
@@ -40,4 +41,4 @@ const GuGuDan = () => {
   );
 };
 
-module.exports = GuGuDan;
+export default GuGuDan;
