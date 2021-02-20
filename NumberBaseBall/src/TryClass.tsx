@@ -1,6 +1,7 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
+import { TryProps } from './Types'
 
-class Try extends PureComponent {
+class Try extends Component<TryProps> {
   // constructor(props) {
   //   super(props);
   //   const filtered = this.props.filter(() => {});

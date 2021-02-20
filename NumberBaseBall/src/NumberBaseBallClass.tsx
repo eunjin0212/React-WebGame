@@ -1,7 +1,16 @@
 //ES2015(ES6) 모듈 문법
 
-import React, { Component, createRef } from "react";
-import Try from "./Try";
+import React, { Component, createRef, FormEvent, ChangeEvent } from "react";
+import TryClass from "./TryClass";
+import { TryInfo } from './Types';
+
+
+interface State {
+  result: string;
+  value: string;
+  answer: number[];
+  tries: TryInfo[];
+}
 
 function getNumbers() {
   const candidate = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -13,17 +22,18 @@ function getNumbers() {
   return array;
 }
 
-class NumberBaseBall extends Component {
+class NumberBaseBall extends Component<{}, State> {
   state = {
     result: "",
     value: "",
     answer: getNumbers(),
     tries: [],
   };
-  shouldComponentUpdate(nextProps, nextState, nextContext) {}
+  //shouldComponentUpdate(nextProps, nextState, nextContext) { }
 
-  onSubmitForm = (e) => {
-    const { value, tries, answer, result } = this.state;
+  onSubmitForm = (e: FormEvent) => {
+    const { value, tries, answer } = this.state;
+    const input = this.inputRef.current;
     //답 제출
     e.preventDefault();
     if (value === answer.join("")) {
@@ -40,7 +50,9 @@ class NumberBaseBall extends Component {
         answer: getNumbers(),
         tries: [],
       });
-      this.inputRef.current.focus();
+      if (input) {
+        input.focus();
+      }
     } else {
       //답 틀렸으면
       const answerArray = value.split("").map((v) => parseInt(v));
@@ -57,7 +69,9 @@ class NumberBaseBall extends Component {
           answer: getNumbers(),
           tries: [],
         });
-        this.inputRef.focus();
+        if (input) {
+          input.focus();
+        }
       } else {
         // 10번이 안틀렸다면
         for (let i = 0; i < 4; i += 1) {
@@ -79,17 +93,19 @@ class NumberBaseBall extends Component {
             value: "",
           };
         });
-        this.inputRef.current.focus();
+        if (input) {
+          input.focus();
+        }
       }
     }
   };
-  onChangeInput = (e) => {
-    console.log(answer);
+  onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(this.state.answer);
     this.setState({
       value: e.target.value,
     });
   };
-  inputRef = createRef();
+  inputRef = createRef<HTMLInputElement>();
   render() {
     const { result, value, tries } = this.state;
     return (
@@ -107,7 +123,7 @@ class NumberBaseBall extends Component {
         <ul>
           {tries.map((v, i) => {
             // v는 객체기됨
-            return <Try key={`${i + 1}차 시도 :`} tryInfo={v} />; //가독성을 위해
+            return <TryClass key={`${i + 1}차 시도 :`} tryInfo={v} />; //가독성을 위해
           })}
         </ul>
       </>
