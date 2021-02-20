@@ -1,4 +1,4 @@
-import React, { useRef, memo, useState } from "react";
+import React, { useRef, memo, useState, useCallback, FormEvent } from "react";
 import Try from "./TryClass";
 
 const getNumbers = () => {
@@ -15,11 +15,12 @@ const NumberBaseball = memo(() => {
   const [answer, setAnswer] = useState(getNumbers());
   const [value, setValue] = useState("");
   const [result, setResult] = useState("");
-  const [tries, setTries] = useState([]);
-  const inputEl = useRef(null);
+  const [tries, setTries] = useState<any[]>([]);
+  const inputEl = useRef<HTMLInputElement>(null);
 
-  const onSubmitForm = (e) => {
+  const onSubmitForm = useCallback<(e: FormEvent) => void>((e) => {
     e.preventDefault();
+    const input = inputEl.current;
     if (value === answer.join("")) {
       setTries((prevTries) => [
         ...prevTries,
@@ -32,7 +33,9 @@ const NumberBaseball = memo(() => {
       setValue("");
       setAnswer(getNumbers());
       setTries([]);
-      inputEl.current.focus();
+      if (input) {
+        input.focus();
+      }
       alert("게임을 다시 실행합니다.");
       setResult("");
     } else {
@@ -45,7 +48,9 @@ const NumberBaseball = memo(() => {
         setValue("");
         setAnswer(getNumbers());
         setTries([]);
-        inputEl.current.focus();
+        if (input) {
+          input.focus();
+        }
         alert("게임을 다시 시작합니다.");
       } else {
         console.log("답은", answer.join(""));
@@ -67,10 +72,12 @@ const NumberBaseball = memo(() => {
           },
         ]);
         setValue("");
-        inputEl.current.focus();
+        if (input) {
+          input.focus();
+        }
       }
     }
-  };
+  }, []);
 
   return (
     <>

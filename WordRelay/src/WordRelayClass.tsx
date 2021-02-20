@@ -57,4 +57,4 @@ class WordRelay extends Component {
     );
   }
 }
-module.exports = WordRelay;
+export default WordRelay;
