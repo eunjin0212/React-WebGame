@@ -65,11 +65,11 @@ const Lotto = () => {
 
   return (
     <div id="container">
-      <div>당첨 숫자!!</div>
+      <div className='lotto-num'>당첨 숫자!!</div>
       <div id="결과창">
         {winBalls.map((v) => <Ball key={v} number={v} />)}
       </div>
-      <div>보너스!</div>
+      <div className='bonus'>보너스!</div>
       {bonus && <Ball number={bonus} />}
       {redo && <button onClick={onClickRedo}>한 번 더!</button>}
     </div>
