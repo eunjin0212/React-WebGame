@@ -93,7 +93,7 @@ const NumberBaseball = memo(() => {
         />
         <button>입력!</button>
       </form>
-      <div>시도: {tries.length}</div>
+      <div className='try'>시도: {tries.length}</div>
       <ul>
         {tries.map((v, i) => (
           <Try key={`${i + 1}차 시도 : ${v.tries}`} tryInfo={v} />

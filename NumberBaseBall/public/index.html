@@ -4,8 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NumberBaseBall</title>
+    <style>
+      .title {
+        font-weight: 700;
+        font-size: 80px;
+        padding-bottom: 20px;
+      }
+      .try {
+        padding-top: 20px;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        height: 50vh;
+      }
+      #root form > button {
+        margin-left: 10px;
+      }
+    </style>
   </head>
   <body>
+    <div class="title">숫자야구</div>
     <div id="root"></div>
     <script src="./dist/app.js"></script>
   </body>
